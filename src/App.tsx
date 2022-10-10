@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, ReactNode } from 'react';
+import { CalciteButton, CalciteIcon, CalciteSlider, CalciteDropdown, CalciteDropdownGroup, CalciteDropdownItem, CalciteFab, CalcitePickList, CalcitePickListItem } from '@esri/calcite-components-react';
+import '@esri/calcite-components/dist/calcite/calcite.css';
 import './App.css';
+import ServiceItem from './components/ServiceItem/ServiceItem';
+import ServiceItemList from './components/ServiceItemList';
 
 function App() {
+
+  const [sliderValue, setSliderValue] = useState(50);
+  const [list, setList] = useState([<ServiceItem/>])
+
+  function updateList(prevList:any)  {
+    setList([...prevList, <ServiceItem/>])
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  <div className="App">
+    <h1>Hello, React</h1>
+    <ServiceItemList items={list}/>
+    <CalciteFab
+        onClick={()=>{
+          updateList(list)
+        }}
+      />
+  </div>
   );
 }
 
