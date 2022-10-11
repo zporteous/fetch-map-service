@@ -1,33 +1,24 @@
-import React, { useState, useRef, useEffect, Ref } from 'react'
-import { CalciteButton, CalciteInput, CalciteLabel } from '@esri/calcite-components-react';
-import axios from 'axios';
-import {isValidMapService, collectFeatures} from './helpers'
+import React, { useEffect, useRef, useState, Ref} from 'react'
+import { CalciteButton, CalciteInput, CalciteLabel, CalciteModal } from '@esri/calcite-components-react';
+import axios, { AxiosResponse } from 'axios';
+import {isValidMapService, collectFeatures, initialQuery} from './helpers'
+import { ButtonState, MapServiceProperties } from '../../global/types';
+import ServiceItemDetails from '../ServiceItemDetails/ServiceItemDetails';
 
 const countQuery = '/query?&where=objectid>0&returnCountOnly=true&f=json'
 
-
-export interface MapServiceProperties {
-  layerTitle?: string;
-  parentLayer?: string;
-  url?: string;
-  supportsQuery?: Boolean;
-  numFeatures?: number;
-  numOtherLayers?:number;
-}
-
-interface ButtonState {
-  color: "blue" | 'inverse' | 'red' | 'neutral' | undefined; //  did not work with curent react typings, gave type error
-  loading?: boolean | undefined;
-  statusMessage?: string;
-}
-
 function ServiceItem() {
+  const [modalToggle, setModalToggle] = useState<boolean>()
   const [url, setUrl] = useState('')
   const [buttonState, setButtonState] = useState<ButtonState>({
     color:'blue',
     loading:undefined,
-    statusMessage:'Fetch features'
+    statusMessage:'Fetch features',
+    icon:'submit'
   })
+
+  const modalRef = useRef<HTMLCalciteModalElement>() // have to use Ref for modal - was not working with react state
+
   const [mapServiceProperties, setMapServiceProperties] = useState<MapServiceProperties>({})
 
   async function handleUrlSubmit(url:string) {
@@ -35,60 +26,56 @@ function ServiceItem() {
       setButtonState({
         color:'blue', 
         loading:true,
-        statusMessage:'Checking that layer supports querys..'
+        statusMessage:'Checking that layer supports querys..',
+        icon:'submit'
       })
-      const parsedUrl = new URL(url);
-      const baseUrl = parsedUrl.origin + parsedUrl.pathname.slice(0,parsedUrl.pathname.indexOf('/MapServer')+10)
-      console.log(baseUrl)
-      const res = await axios.get(baseUrl+"/0"+countQuery)
-      console.log(res)
-      switch(res.data.status){
-        case 499:
-          setButtonState({
-            color:'red', 
-            loading:false,
-            statusMessage:'Not public'
+      initialQuery(url)
+        .then(async (res)=> {
+          console.log(res.data)
+          setMapServiceProperties({
+            layers:res.data.layers,
+            tables:res.data.tables,
+            url:res.baseUrl,
+            path: res.path,
+            maxRecordCount:res.data.maxRecordCount
           })
-          break
-        case 400:
-          setButtonState({
-            color:'red', 
-            loading:false,
-            statusMessage:'Query not supported'
-          })
-          break
-        default:
           setButtonState({
             color:'blue', 
-            loading:true,
-            statusMessage:'Aggregating features'
+            loading:undefined,
+            statusMessage:'Fetched',
+            icon:'check',
+            disabled:true
           })
-          let count = res.data;
-          collectFeatures(baseUrl, count)
-      }
-  
+        })
+        .catch((e)=> {
+          setButtonState({
+            color:'red', 
+            loading:undefined,
+            statusMessage:e.message,
+            icon:'x'
+          })
+        })
     } else{
       setButtonState({
         color:'red', 
         loading:undefined,
-        statusMessage:'Url Invalid'
+        statusMessage:'Url Invalid',
+        icon:'x'
       })
     }
-
     return 
   }
-
-
 
   return (
     <div>
       <form>
-        <CalciteLabel> {mapServiceProperties.layerTitle ? mapServiceProperties.layerTitle : 'Enter URL to Map Service'  }
+        <CalciteLabel> {mapServiceProperties.path ? mapServiceProperties.path : 'Enter URL to Map Service'  }
           <CalciteInput 
             icon='layer-map-service'
             placeholder='URL'
             value={url}
             type='url'
+            disabled={buttonState.disabled}
             onCalciteInputChange={ (event)=> {
               event.preventDefault()
               setUrl(event.target.value)
@@ -101,9 +88,30 @@ function ServiceItem() {
           loading={buttonState.loading}
           appearance='clear'
           color={buttonState.color as "blue" | 'inverse' | 'red' | 'neutral' | undefined}
-          iconStart='submit'
+          iconStart={buttonState.icon}
+          disabled={buttonState.disabled}
         > {buttonState.statusMessage} </CalciteButton>
+        <CalciteButton
+          style={{marginLeft:'.5em'}}
+          scale='s'
+          onClick={()=>{
+            if(modalRef?.current != undefined) {
+              modalRef.current.open=!modalRef.current.open
+            }
+          }}
+          disabled={mapServiceProperties.url !== undefined ? undefined : true}
+        >View Details</CalciteButton> 
       </form>
+      <CalciteModal
+        id='modal'
+        open={modalToggle}
+        ref={modalRef as any}
+      > 
+        <div slot='header'>{mapServiceProperties.path}</div>
+        <div slot='content'>
+        <ServiceItemDetails {...mapServiceProperties}/>
+        </div>
+      </CalciteModal>
     </div>
   )
 }
