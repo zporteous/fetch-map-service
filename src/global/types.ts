@@ -54,3 +54,9 @@ export interface LayerElement {
   supportsDynamicLegends?: boolean 
   type?: string;
 }
+
+export interface TableElement {
+   id?: number,
+   name?: string,
+   type?: string
+}

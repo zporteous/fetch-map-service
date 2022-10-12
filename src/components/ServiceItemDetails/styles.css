@@ -1,0 +1,13 @@
+
+#service-item-details-container {
+  display:grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  text-align:left;
+}
+
+.service-item-details-column {
+  display:grid;
+  grid-template-columns: 75%  25%;
+  grid-template-rows: 75px auto;
+}

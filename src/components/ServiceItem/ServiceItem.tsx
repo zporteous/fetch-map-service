@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState, Ref} from 'react'
+import {useRef, useState} from 'react'
 import { CalciteButton, CalciteInput, CalciteLabel, CalciteModal } from '@esri/calcite-components-react';
-import axios, { AxiosResponse } from 'axios';
-import {isValidMapService, collectFeatures, initialQuery} from './helpers'
+import {isValidMapService, initialQuery} from './helpers'
 import { ButtonState, MapServiceProperties } from '../../global/types';
 import ServiceItemDetails from '../ServiceItemDetails/ServiceItemDetails';
 
-const countQuery = '/query?&where=objectid>0&returnCountOnly=true&f=json'
+
 
 function ServiceItem() {
-  const [modalToggle, setModalToggle] = useState<boolean>()
   const [url, setUrl] = useState('')
   const [buttonState, setButtonState] = useState<ButtonState>({
     color:'blue',
@@ -95,7 +93,7 @@ function ServiceItem() {
           style={{marginLeft:'.5em'}}
           scale='s'
           onClick={()=>{
-            if(modalRef?.current != undefined) {
+            if(modalRef?.current !== undefined) {
               modalRef.current.open=!modalRef.current.open
             }
           }}
@@ -104,9 +102,8 @@ function ServiceItem() {
       </form>
       <CalciteModal
         id='modal'
-        open={modalToggle}
         ref={modalRef as any}
-        fullscreen
+        width='l'
       > 
         <div slot='header'>{mapServiceProperties.path}</div>
         <div slot='content'>

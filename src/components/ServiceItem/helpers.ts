@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { InitialQueryResponse } from '../../global/types';
+import { InitialQueryResponse, LayerElement } from '../../global/types';
 
 /*
 get count of features
@@ -41,7 +41,14 @@ export async function collectFeatures(baseUrl:string, count:number) {
   // const baseResponse = await axios.get(baseUrl+'?f=json')
   let q = '/query?&where=objectid>0&returnCountOnly=true&f=json'
   console.log(count)
- 
+}
+
+export async function downloadAllLayers(layers:LayerElement) {
+  return
+}
+
+export async function downloadAllTables(layers:LayerElement) {
+  return
 }
 
 
