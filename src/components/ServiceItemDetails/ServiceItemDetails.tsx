@@ -1,11 +1,20 @@
 import React from 'react'
-import { MapServiceProperties } from '../../global/types'
-
+import { MapServiceProperties, LayerElement } from '../../global/types'
+import { CalciteDropdown, CalciteDropdownItem, CalciteList, CalciteListItem, CalciteButton } from '@esri/calcite-components-react';
+import ServiceItemDetailsElement from '../ServiceItemDetailsElement/ServiceItemDetailsElement';
 function ServiceItemDetails(props:MapServiceProperties) {
   return (
-    <div>{props.layers?.map((r:any)=>{
-        return <h1 key={r.id}>{r.id}sfsd</h1>
-    })}</div>
+    <div>
+
+      <CalciteList>
+        <div>
+          {props.layers?.map((r:LayerElement, index)=>{
+              return <ServiceItemDetailsElement {...r}/>
+          })}
+        </div>
+      </CalciteList>
+
+    </div> 
   )
 }
 

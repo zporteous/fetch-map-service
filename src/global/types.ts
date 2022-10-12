@@ -41,3 +41,16 @@ export interface ButtonState {
   disabled?: boolean;
   action?:Function;
 }
+
+export interface LayerElement {
+  defaultVisibility?: boolean;
+  geometryType?: string;
+  id?: number;
+  maxScale?: number ;
+  minScale?: number;
+  name?: string ;
+  parentLayerId?: number;
+  subLayerIds?: number | null;
+  supportsDynamicLegends?: boolean 
+  type?: string;
+}

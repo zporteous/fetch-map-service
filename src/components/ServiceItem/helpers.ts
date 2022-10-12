@@ -5,34 +5,8 @@ import { InitialQueryResponse } from '../../global/types';
 get count of features
 /query?&where=objectid>0&returnCountOnly=true&f=json
 
-expected if behind auth
-{
- "error": {
-  "code": 499,
-  "message": "Token Required",
-  "details": []
- }
-}
-
-expected if query not supported
-
-{
- "error": {
-  "code": 400,
-  "extendedCode": -2147220222,
-  "message": "Requested operation is not supported by this service.",
-  "details": [
-   "The requested capability is not supported."
-  ]
- }
-}
-
 repeat this query until all features are collected
 /query?&where=objectid>=1000+and+objectid<1999&f=geojson&outFields=*
-
-
-download=concat(res.data.features)
-
 */
 
 export function isValidMapService(url:string) {
@@ -47,7 +21,6 @@ export function initialQuery(url:string):Promise<InitialQueryResponse> {
   return new Promise((resolve, reject) => {
     const parsedUrl = new URL(url);
     const baseUrl = parsedUrl.origin + parsedUrl.pathname.slice(0,parsedUrl.pathname.indexOf('/MapServer')+10)
-    console.log(baseUrl)
     axios.get(baseUrl+'?f=json')
       .then((res:AxiosResponse)=> {
         if(!res.data.error) {

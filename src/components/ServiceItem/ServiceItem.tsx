@@ -106,6 +106,7 @@ function ServiceItem() {
         id='modal'
         open={modalToggle}
         ref={modalRef as any}
+        fullscreen
       > 
         <div slot='header'>{mapServiceProperties.path}</div>
         <div slot='content'>
