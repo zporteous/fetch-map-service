@@ -1,6 +1,5 @@
-import React from 'react'
 import { MapServiceProperties, LayerElement, TableElement } from '../../global/types'
-import { CalciteDropdown, CalciteDropdownItem, CalciteList, CalciteListItem, CalciteButton, CalciteLabel, CalciteAction } from '@esri/calcite-components-react';
+import { CalciteList, CalciteButton, CalciteLabel, CalciteAction } from '@esri/calcite-components-react';
 import ServiceItemDetailsElement from '../ServiceItemDetailsElement/ServiceItemDetailsElement';
 import './styles.css';
 
@@ -17,7 +16,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
             <CalciteList>
               <div>
                 {props.layers?.map((r:LayerElement, index)=>{
-                    return <ServiceItemDetailsElement {...r}/>
+                    return <ServiceItemDetailsElement key={index} {...r}/>
                 })}
               </div>
             </CalciteList>
@@ -31,7 +30,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
             <CalciteList>
               <div>
                 {props.tables?.map((r:TableElement, index)=>{
-                    return <ServiceItemDetailsElement {...r}/>
+                    return <ServiceItemDetailsElement key={index} {...r}/>
                 })}
               </div>
             </CalciteList>

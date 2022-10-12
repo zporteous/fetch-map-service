@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-
 /*
 response from teh first query sent to teh service after submission 
 */ 

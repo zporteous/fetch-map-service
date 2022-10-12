@@ -36,19 +36,8 @@ export function initialQuery(url:string):Promise<InitialQueryResponse> {
   })
 }
 
-//:Promise<MapServiceProperties>
-export async function collectFeatures(baseUrl:string, count:number) {
-  // const baseResponse = await axios.get(baseUrl+'?f=json')
-  let q = '/query?&where=objectid>0&returnCountOnly=true&f=json'
-  console.log(count)
-}
 
-export async function downloadAllLayers(layers:LayerElement) {
-  return
-}
 
-export async function downloadAllTables(layers:LayerElement) {
-  return
-}
+
 
 
