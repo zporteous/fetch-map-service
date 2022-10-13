@@ -59,3 +59,9 @@ export interface TableElement {
    name?: string,
    type?: string
 }
+
+export interface GetCountReturnValue {
+  count:number;
+  numQueries:number; // used for foor loop, increment for loop by maxRecordCount
+  maxObjectId:number;
+}

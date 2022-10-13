@@ -4,8 +4,12 @@ import ServiceItemDetailsElement from '../ServiceItemDetailsElement/ServiceItemD
 import './styles.css';
 
 function ServiceItemDetails(props:MapServiceProperties) {
-  let tablesPresent = props.tables!.length > 0  ? undefined : true;
-  let layersPresent = props.layers!.length > 0 ? undefined : true;
+  if(props.tables!==undefined){
+    var tablesPresent = props.tables.length > 0 ? undefined : true;
+  }
+  if(props.layers!==undefined) {
+    var layersPresent = props.layers!.length > 0 ? undefined : true;
+  }
   return (
     <div id='service-item-details-container'>
       <div className='service-item-details-column'>
@@ -16,7 +20,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
             <CalciteList>
               <div>
                 {props.layers?.map((r:LayerElement, index)=>{
-                    return <ServiceItemDetailsElement key={index} {...r}/>
+                    return <ServiceItemDetailsElement key={index} {...{element:r, mapServiceProperties:props}}/>
                 })}
               </div>
             </CalciteList>
@@ -30,7 +34,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
             <CalciteList>
               <div>
                 {props.tables?.map((r:TableElement, index)=>{
-                    return <ServiceItemDetailsElement key={index} {...r}/>
+                    return <ServiceItemDetailsElement key={index} {...{element:r, mapServiceProperties:props}}/>
                 })}
               </div>
             </CalciteList>
