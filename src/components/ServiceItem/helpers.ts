@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
-import { InitialQueryResponse, LayerElement } from '../../global/types';
+import { group } from 'console';
+import { InitialQueryResponse, LayerElement, MapServiceProperties, OrganizedLayers } from '../../global/types';
 
 /*
 get count of features
@@ -23,6 +24,7 @@ export function initialQuery(url:string):Promise<InitialQueryResponse> {
     const baseUrl = parsedUrl.origin + parsedUrl.pathname.slice(0,parsedUrl.pathname.indexOf('/MapServer')+10)
     axios.get(baseUrl+'?f=json')
       .then((res:AxiosResponse)=> {
+        console.log(res.data)
         if(!res.data.error) {
           res.data.capabilities.includes("Query") ? resolve({data:res.data, baseUrl:baseUrl, path:parsedUrl.pathname})
             : reject({message:"Query not supported"})
@@ -34,6 +36,35 @@ export function initialQuery(url:string):Promise<InitialQueryResponse> {
         reject({message:"Something went wrong with request..",error:e})
       })
   })
+}
+
+export function groupLayersPresent(mapProps:MapServiceProperties):boolean{
+  const values = mapProps.layers?.filter((layer:LayerElement)=>{return layer.type === 'Group Layer'})
+  if(values!.length>0){
+    return true
+  } else {
+    return false
+  }
+}
+
+export function organizeGroupLayers(mapProps:MapServiceProperties):OrganizedLayers[]{
+  const values = mapProps.layers?.filter((layer:LayerElement)=>{return layer.type === 'Group Layer'});
+  const organizedLayers:OrganizedLayers[] = [];
+  values?.forEach((parentLayer:LayerElement)=>{
+    const subLayers = mapProps.layers?.filter((layer:LayerElement)=>{
+      if (parentLayer.subLayerIds !== null && parentLayer.subLayerIds !== undefined) {
+        if (parentLayer.subLayerIds.includes(layer.id!)) {
+          return layer;
+        }
+      } 
+    })
+    let organizedLayer:OrganizedLayers = {
+      parentLayer: parentLayer,
+      subLayers: subLayers
+    }
+    organizedLayers.push(organizedLayer);
+  })
+  return organizedLayers;
 }
 
 

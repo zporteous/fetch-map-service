@@ -50,7 +50,7 @@ export interface LayerElement {
   minScale?: number;
   name?: string ;
   parentLayerId?: number;
-  subLayerIds?: number | null;
+  subLayerIds?: number[] | null;
   supportsDynamicLegends?: boolean 
   type?: string;
 }
@@ -67,4 +67,9 @@ export interface GetCountReturnValue {
   count:number;
   numQueries:number; // used for foor loop, increment for loop by maxRecordCount
   maxObjectId:number;
+}
+
+export interface OrganizedLayers {
+  parentLayer?: LayerElement,
+  subLayers?: LayerElement[]
 }

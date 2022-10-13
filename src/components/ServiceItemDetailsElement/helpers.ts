@@ -3,12 +3,6 @@ import axios from "axios";
 import { LayerElement, TableElement, GetCountReturnValue } from "../../global/types"
 
 
-//:Promise<MapServiceProperties>
-
-
-
-
-
 export async function getCount(baseUrl:string, layer:LayerElement, maxRecordCount:number):Promise<GetCountReturnValue> {
   
   let countQuery =`/${layer.id}/query?&where=objectid>0&returnCountOnly=true&f=json`
