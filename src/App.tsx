@@ -1,14 +1,17 @@
 import  { useState} from 'react';
-import {CalciteFab} from '@esri/calcite-components-react';
+import {CalciteAction, CalciteActionBar, CalciteFab} from '@esri/calcite-components-react';
 import '@esri/calcite-components/dist/calcite/calcite.css';
 import './App.css';
 import ServiceItem from './components/ServiceItem/ServiceItem';
 import ServiceItemList from './components/ServiceItemList';
 
 const sampleServices = [
-  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/ServiceRequest/MapServer',
-  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SampleWorldCities/MapServer',
-  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/MapServer'
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Water_Network/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SpatioTemporalAggregation/RainfallTimeSeriesDataIllinois/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Military/MapServer'
  ]
 
  function getRandomInt(min:number, max:number) {
@@ -26,19 +29,31 @@ function App() {
   }
 
   function updateListWithSeedUrl(prevList:any)  {
-    let seed={seedUrl:sampleServices[getRandomInt(0,3)]}
-    setList([...prevList, <ServiceItem {...seed} />])
+    let seeded={seedUrl:sampleServices[getRandomInt(0,5)]}
+    console.log(seed)
+    setList([...prevList, <ServiceItem {...seeded} />])
   }
 
   return (
   <div className="App">
     <h1>Hello, React</h1>
     <ServiceItemList items={list}/>
-    <CalciteFab
+    <CalciteActionBar style={{marginTop:'1em'}} layout='horizontal' expanded>
+      <CalciteAction 
+        icon='plus'
+        text='Add service'
         onClick={()=>{
           updateList(list)
         }}
       />
+      <CalciteAction 
+        text='Use sample service'
+        icon='group-form-plus'
+        onClick={()=>{
+          updateListWithSeedUrl(list)
+        }}
+      />
+    </CalciteActionBar>
   </div>
   );
 }

@@ -58,7 +58,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
 
   return (
       isLayer(props.element) ? 
-        <CalciteListItem
+        <CalciteListItem style={{marginBottom:'.5em'}}
           label={props.element.name}
           description={`${props.element.geometryType} - ${props.element.type}`}
           nonInteractive
@@ -73,7 +73,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
           ></CalciteAction>
         </CalciteListItem>
       :
-        <CalciteListItem
+        <CalciteListItem style={{marginBottom:'.5em'}}
           label={props.element.name}
           description={`${props.element.type}`}
           nonInteractive

@@ -41,6 +41,7 @@ export interface ButtonState {
   action?:Function;
 }
 
+// response after /MapServer for the layers attribute 
 export interface LayerElement {
   defaultVisibility?: boolean;
   geometryType?: string;
@@ -54,12 +55,14 @@ export interface LayerElement {
   type?: string;
 }
 
+// response after /MapServer for the tables attribute 
 export interface TableElement {
    id?: number,
    name?: string,
    type?: string
 }
 
+// response after Query to returnCountOnly and getting max objectId
 export interface GetCountReturnValue {
   count:number;
   numQueries:number; // used for foor loop, increment for loop by maxRecordCount

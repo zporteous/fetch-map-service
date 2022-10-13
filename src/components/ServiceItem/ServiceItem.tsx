@@ -7,19 +7,13 @@ import ServiceItemDetails from '../ServiceItemDetails/ServiceItemDetails';
 
 
 function ServiceItem({ seedUrl }: { seedUrl: string | undefined }) {
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState(seedUrl ? seedUrl : '')
   const [buttonState, setButtonState] = useState<ButtonState>({
     color:'blue',
     loading:undefined,
     statusMessage:'Fetch features',
     icon:'submit'
   })
-
-  if(seedUrl===undefined) {
-    {}
-  } else {
-    setUrl(seedUrl)
-  }
 
   const modalRef = useRef<HTMLCalciteModalElement>() // have to use Ref for modal - was not working with react state
 

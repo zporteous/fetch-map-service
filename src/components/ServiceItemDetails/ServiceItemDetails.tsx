@@ -10,6 +10,8 @@ function ServiceItemDetails(props:MapServiceProperties) {
   if(props.layers!==undefined) {
     var layersPresent = props.layers!.length > 0 ? undefined : true;
   }
+
+  // TODO if layer is a group layer, make accordian with its sublayers as the items
   return (
     <div id='service-item-details-container'>
       <div className='service-item-details-column'>
