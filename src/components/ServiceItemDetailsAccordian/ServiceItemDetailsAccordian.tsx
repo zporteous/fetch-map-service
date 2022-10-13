@@ -14,7 +14,8 @@ function ServiceItemDetailsAccordian(props:ServiceItemDetailsAccordianProps) {
     <div>
       {props.organizedLayers.map((organizedLayer)=>{
         return <CalciteAccordion>
-          <CalciteAccordionItem
+          <CalciteAccordionItem 
+            style={{outline:'none'}}
             item-title={organizedLayer.parentLayer?.name}
             item-subtitle={`layers`}
           >

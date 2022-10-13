@@ -40,8 +40,12 @@ export function initialQuery(url:string):Promise<InitialQueryResponse> {
 
 export function groupLayersPresent(mapProps:MapServiceProperties):boolean{
   const values = mapProps.layers?.filter((layer:LayerElement)=>{return layer.type === 'Group Layer'})
-  if(values!.length>0){
-    return true
+  if (values !== undefined){
+    if(values!.length>0){
+      return true
+    } else {
+      return false
+    }
   } else {
     return false
   }

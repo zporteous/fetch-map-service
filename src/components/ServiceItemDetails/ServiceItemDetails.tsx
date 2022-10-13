@@ -20,11 +20,15 @@ function ServiceItemDetails(props:MapServiceProperties) {
   if (groupLayersPresent(props)) {
     renderGroups=true;
     organizedGroupLayers = organizeGroupLayers(props)
+    const noSubLayers = props.layers?.filter((layer:LayerElement)=>{return layer.subLayerIds===null})
   } else {
     renderGroups = false;
   }
 
-  const noSubLayers = props.layers?.filter((layer:LayerElement)=>{return layer.subLayerIds===null})
+  let noSubLayers = props.layers?.filter((layer:LayerElement)=>{return layer.subLayerIds===null})
+  if(noSubLayers===undefined){
+    noSubLayers=[]
+  }
 
   return (
     <div id='service-item-details-container'>
@@ -37,7 +41,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
                   organizedLayers={organizedGroupLayers}
                   mapServiceProperties={props}
                 />
-            :
+            : noSubLayers!.length > 0 ?
               <CalciteList>
                 <div>
                   {noSubLayers!.map((r:LayerElement, index)=>{
@@ -45,6 +49,8 @@ function ServiceItemDetails(props:MapServiceProperties) {
                   })}
                 </div>
               </CalciteList>
+              :
+              <></>
           }       
       </div>
       <div className='service-item-details-column'>

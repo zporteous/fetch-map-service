@@ -8,7 +8,6 @@ import ServiceItemList from './components/ServiceItemList';
 const sampleServices = [
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Water_Network/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/MapServer',
-  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SpatioTemporalAggregation/RainfallTimeSeriesDataIllinois/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Military/MapServer'
@@ -29,7 +28,7 @@ function App() {
   }
 
   function updateListWithSeedUrl(prevList:any)  {
-    let seeded={seedUrl:sampleServices[getRandomInt(0,5)]}
+    let seeded={seedUrl:sampleServices[getRandomInt(0,4)]}
     console.log(seed)
     setList([...prevList, <ServiceItem {...seeded} />])
   }

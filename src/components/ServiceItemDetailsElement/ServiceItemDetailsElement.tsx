@@ -1,24 +1,40 @@
 
 import { LayerElement, TableElement, MapServiceProperties } from '../../global/types'
-import { CalciteListItem, CalciteAction, CalciteProgress } from '@esri/calcite-components-react'
+import { CalciteListItem, CalciteAction, CalciteProgress, CalciteAlert } from '@esri/calcite-components-react'
 import { isLayer, getCount } from './helpers'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {GeoJSON} from 'geojson'
-
+import { downloadAllLayers } from '../ServiceItemDetails/helpers';
 
 interface ServiceItemDetailsElementProps {
   element: LayerElement | TableElement;
   mapServiceProperties: MapServiceProperties;
 }
 
-export default function ServiceItemDetailsElement(props:ServiceItemDetailsElementProps) {
+const download = (path:string, filename:string) => {
+  // Create a new link
+  const anchor = document.createElement('a');
+  anchor.href = path;
+  anchor.download = filename;
+  // Append to the DOM
+  document.body.appendChild(anchor);
+  // Trigger `click` event
+  anchor.click();
+  // Remove element from DOM
+  document.body.removeChild(anchor);
+}; 
 
+export default function ServiceItemDetailsElement(props:ServiceItemDetailsElementProps) {
   const [loaderValue, setLoaderValue] = useState(0)
   const [loading, setLoading] = useState<boolean>(false)
   const [geojsonDownload, setGeojsonDownload] = useState({})
   const [listIcon, setListIcon] = useState<'download'|'x'>('download')
-
+  interface AlertType {
+    open?:boolean;
+    message?:string;
+  }
+  const [alert, setAlert] = useState<AlertType>()
 
   // synchronous calls to collect data, nice for loading bar, slower 
   async function handleLayerDownload(){
@@ -47,17 +63,25 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
           }
         }
         setLoading(false)
+        const file = JSON.stringify(featureCollection)
+        const blob = new Blob([file]);                   // Step 3
+        const fileDownloadUrl = URL.createObjectURL(blob);
+        download(fileDownloadUrl, props.element.name!+'.geojson')
       })
       .catch(e=>{
         setListIcon('x')
-        setLoading(true)
+        setLoading(false)
+        setAlert({
+          open:true,
+          message:e.message
+        })
         console.log(e)
       })
   }
   
-
   return (
-      isLayer(props.element) ? 
+    <div>
+      {isLayer(props.element) ? 
         <CalciteListItem style={{marginBottom:'.5em'}}
           label={props.element.name}
           description={`${props.element.geometryType} - ${props.element.type}`}
@@ -83,7 +107,15 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
             slot="actions-end" 
             icon={listIcon}
             onClick={handleLayerDownload}
+            disabled={props.element.type==="Group Layer"? true : undefined}
           ></CalciteAction>
-        </CalciteListItem>
+        </CalciteListItem>}
+        <CalciteAlert
+          label="Something went wrong"
+          open={alert?.open}
+        >
+          {alert?.message !== undefined ? alert?.message : ''}
+        </CalciteAlert>
+      </div>
   )
 }
