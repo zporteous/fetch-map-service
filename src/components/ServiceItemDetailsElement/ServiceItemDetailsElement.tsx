@@ -3,9 +3,9 @@ import { LayerElement, TableElement, MapServiceProperties } from '../../global/t
 import { CalciteListItem, CalciteAction, CalciteProgress, CalciteAlert } from '@esri/calcite-components-react'
 import { isLayer, getCount } from './helpers'
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {GeoJSON} from 'geojson'
-import { downloadAllLayers } from '../ServiceItemDetails/helpers';
+
 
 interface ServiceItemDetailsElementProps {
   element: LayerElement | TableElement;
@@ -43,6 +43,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
     let errorFlag=false;
     getCount(props.mapServiceProperties.url!, props.element, props.mapServiceProperties.maxRecordCount!)
       .then(async (data)=>{
+        console.log(data)
         const {count, numQueries, maxObjectId} = data
         const {maxRecordCount, url} = props.mapServiceProperties
         const featureCollection:GeoJSON = {
@@ -52,6 +53,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
         if(count < maxRecordCount!){ // have to request oids > 0 for when the oids are not sequential
           let oidQuery =`/${props.element.id}/query?&where=objectid>${0}&f=geojson`
           const collectRes = await axios.get(url+oidQuery)
+          console.log(collectRes.data)
           if (collectRes.data.error){
             errorFlag=true
             setListIcon('x')
@@ -69,6 +71,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
           for (let i=1; i<numQueries+1; i+=1) {
             let iterateOidQuery =`/${props.element.id}/query?&where=objectid>=${iterator}+and+objectid<=${iterator+maxRecordCount!-1}&f=geojson`
             const collectRes = await axios.get(url+iterateOidQuery)
+            console.log(collectRes.data)
             if (collectRes.data.error){
               errorFlag=true
               setListIcon('x')
@@ -77,6 +80,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
                 open:true,
                 message:`error with request ${JSON.stringify(collectRes.data.error)}`
               })
+              console.log(`error at features ${i} - ${i+=maxRecordCount!-1}`)
             } else {
               setLoaderValue(i/numQueries)
               featureCollection.features.push(...collectRes.data.features)

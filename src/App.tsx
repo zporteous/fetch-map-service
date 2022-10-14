@@ -57,7 +57,24 @@ function App() {
       </div>
     </div>
     <div id='top-content'>
-    
+      <div>
+        <p>
+          Ever tried to add a service to your map in ArcGIS Pro only to find out you cant export features from it? 
+          Use this React app to quickly receive geojson for any Feature Layer in a map service. For exporting to work
+          the service must fulfill the following requirements:
+        </p>
+        <ul>
+          <li>Must be Public</li>
+          <li>Must support querying</li>
+          <li>Must be a feature layer</li>
+        </ul>
+        <p>
+          Pressing the Fetch features button will retrieve the service data - you can then press the "View Details" button to select an individual layer or table to download. 
+        </p>
+      </div>
+      <div>
+        
+      </div>
     </div>
     <div id='main-content'>
       

@@ -24,6 +24,10 @@
 
 #top-content {
   grid-area: top-content;
+  text-align: justify;
+  font-size: large;
+  display:grid;
+  grid-template-columns: 75% auto;
 }
 
 #header-icon {
