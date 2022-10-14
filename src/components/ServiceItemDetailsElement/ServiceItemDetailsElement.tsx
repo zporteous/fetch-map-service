@@ -104,7 +104,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
         setLoading(false)
         setAlert({
           open:true,
-          message:`error with request ${JSON.stringify(e.message)}`
+          message:`error with request! error: ${JSON.stringify(e.message)}`
         })
         console.log(e.message)
       })
