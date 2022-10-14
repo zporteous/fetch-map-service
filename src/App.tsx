@@ -1,5 +1,5 @@
 import  { useState} from 'react';
-import {CalciteAction, CalciteActionBar, CalciteFab} from '@esri/calcite-components-react';
+import {CalciteAction, CalciteActionBar, CalciteIcon, CalciteLabel, CalciteLink} from '@esri/calcite-components-react';
 import '@esri/calcite-components/dist/calcite/calcite.css';
 import './App.css';
 import ServiceItem from './components/ServiceItem/ServiceItem';
@@ -48,24 +48,40 @@ function App() {
 
   return (
   <div className="App">
-    <h1>Hello, React</h1>
-    <ServiceItemList items={list}/>
-    <CalciteActionBar style={{marginTop:'1em'}} layout='horizontal' expanded>
-      <CalciteAction 
-        icon='plus'
-        text='Add service'
-        onClick={()=>{
-          updateList(list)
-        }}
-      />
-      <CalciteAction 
-        text='Use sample service'
-        icon='group-form-plus'
-        onClick={()=>{
-          updateListWithSeedUrl(list)
-        }}
-      />
-    </CalciteActionBar>
+    <div id='header'>
+      <div>
+        <CalciteLabel><h1>Mapservice Export</h1></CalciteLabel>
+      </div>
+      <div id='header-icon'>
+        <CalciteIcon  icon='download'/>
+      </div>
+    </div>
+    <div id='top-content'>
+    
+    </div>
+    <div id='main-content'>
+      
+      <ServiceItemList items={list}/>
+      <CalciteActionBar style={{marginTop:'1em'}} layout='horizontal' expanded>
+        <CalciteAction 
+          icon='plus'
+          text='Add service'
+          onClick={()=>{
+            updateList(list)
+          }}
+        />
+        <CalciteAction 
+          text='Use sample service'
+          icon='group-form-plus'
+          onClick={()=>{
+            updateListWithSeedUrl(list)
+          }}
+        />
+      </CalciteActionBar>
+    </div>
+    <div id='footer'>
+      <CalciteLink href='https://zpdev.app/old-personal'> Visit Zach's Site</CalciteLink>
+    </div>
   </div>
   );
 }

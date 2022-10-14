@@ -33,7 +33,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
   return (
     <div id='service-item-details-container'>
       <div className='service-item-details-column'>
-        <h3 className='detail-title'>Layers</h3><CalciteAction disabled={layersPresent} id='download-all-action' scale='s' icon='download-to' text=''>Download all</CalciteAction>
+        <h3 className='detail-title'>Layers</h3><div></div>
           {layersPresent !== undefined ?
             <div>No Layers Present</div>
               : renderGroups ? // are we rendering group layers? if so render accordians before ungrouped layers
@@ -54,7 +54,7 @@ function ServiceItemDetails(props:MapServiceProperties) {
           }       
       </div>
       <div className='service-item-details-column'>
-        <h3 className='detail-title'>Tables</h3><CalciteAction disabled={tablesPresent} id='download-all-action' scale='s' icon='download-to' text=''>Download all</CalciteAction>
+        <h3 className='detail-title'>Tables</h3><div></div>
           {tablesPresent !== undefined ?
             <div>No Tables Present</div>
             : 

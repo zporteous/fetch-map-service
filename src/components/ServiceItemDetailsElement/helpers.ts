@@ -7,12 +7,10 @@ export async function getCount(baseUrl:string, layer:LayerElement, maxRecordCoun
   
   let countQuery =`/${layer.id}/query?&where=objectid>0&returnCountOnly=true&f=json`
   let maxObjectIdQuery =`/${layer.id}/query?&where=objectid>0&returnIdsOnly=true&f=json`
-  console.log(baseUrl+countQuery)
   return new Promise((resolve, reject) => {
   axios.get(baseUrl+countQuery)
     .then(async (res)=> {
       const oidQueryRes = await axios.get(baseUrl+maxObjectIdQuery)
-      console.log(oidQueryRes.data)
       if (oidQueryRes.data.objectIds===null) {
         reject({message:"layer is empty or non - compatible"})
       } else {
