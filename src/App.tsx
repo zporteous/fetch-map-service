@@ -77,7 +77,6 @@ function App() {
       </div>
     </div>
     <div id='main-content'>
-      
       <ServiceItemList items={list}/>
       <CalciteActionBar style={{marginTop:'1em'}} layout='horizontal' expanded>
         <CalciteAction 
