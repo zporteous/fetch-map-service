@@ -10,7 +10,11 @@ const sampleServices = [
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Energy/Geology/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/SpatioTemporalAggregation/RainfallTimeSeriesDataIllinois/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer',
-  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Military/MapServer'
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Military/MapServer',
+  'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Region_Division/MapServer',
+  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_TAB2020/State_County/MapServer',
+  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2018/State_County/MapServer',
+  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2017/Places_CouSub_ConCity_SubMCD/MapServer'
  ]
 
  function getRandomInt(min:number, max:number) {
@@ -20,6 +24,8 @@ const sampleServices = [
 }
 
 function App() {
+  const [lastSeed, setLastSeed] = useState<number>()
+  
   let seed = {seedUrl:undefined}
   const [list, setList] = useState([<ServiceItem {...seed}/>])
 
@@ -28,8 +34,15 @@ function App() {
   }
 
   function updateListWithSeedUrl(prevList:any)  {
-    let seeded={seedUrl:sampleServices[getRandomInt(0,4)]}
-    console.log(seed)
+    let rand = getRandomInt(0,8)
+    let seeded;
+    if (rand === lastSeed) { // ensure same seed is not used twice in a row
+      seeded={seedUrl:sampleServices[rand+1]}
+      setLastSeed(rand+1)
+    }
+    let neww = getRandomInt(0,8)
+    seeded={seedUrl:sampleServices[neww]}
+    setLastSeed(neww)
     setList([...prevList, <ServiceItem {...seeded} />])
   }
 

@@ -40,6 +40,7 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
   async function handleLayerDownload(){
     setLoaderValue(0)
     setLoading(true)
+    let errorFlag=false;
     getCount(props.mapServiceProperties.url!, props.element, props.mapServiceProperties.maxRecordCount!)
       .then(async (data)=>{
         console.log(data)
@@ -49,33 +50,63 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
           type:"FeatureCollection",
           features:[]
         }
-        let iterator = 0;
-        for (let i=1; i<numQueries+1; i+=1) {
-          let iterateOidQuery =`/${props.element.id}/query?&where=objectid>=${iterator}+and+objectid<=${iterator+maxRecordCount!-1}&f=geojson`
-          const collectRes = await axios.get(url+iterateOidQuery)
+        if(count < maxRecordCount!){ // have to request oids > 0 for when the oids are not sequential
+          let oidQuery =`/${props.element.id}/query?&where=objectid>${0}&f=geojson`
+          const collectRes = await axios.get(url+oidQuery)
           console.log(collectRes.data)
           if (collectRes.data.error){
-            console.log(`error at features ${i} - ${i+=maxRecordCount!-1}`)
+            errorFlag=true
+            setListIcon('x')
+            setLoading(false)
+            setAlert({
+              open:true,
+              message:`error with request ${JSON.stringify(collectRes.data.error)}`
+            })
           } else {
-            setLoaderValue(i/numQueries)
+            setLoaderValue(1)
             featureCollection.features.push(...collectRes.data.features)
-            iterator+=maxRecordCount!
+          }
+        } else {
+          let iterator = 0;
+          for (let i=1; i<numQueries+1; i+=1) {
+            let iterateOidQuery =`/${props.element.id}/query?&where=objectid>=${iterator}+and+objectid<=${iterator+maxRecordCount!-1}&f=geojson`
+            const collectRes = await axios.get(url+iterateOidQuery)
+            console.log(collectRes.data)
+            if (collectRes.data.error){
+              errorFlag=true
+              setListIcon('x')
+              setLoading(false)
+              setAlert({
+                open:true,
+                message:`error with request ${JSON.stringify(collectRes.data.error)}`
+              })
+              console.log(`error at features ${i} - ${i+=maxRecordCount!-1}`)
+            } else {
+              setLoaderValue(i/numQueries)
+              featureCollection.features.push(...collectRes.data.features)
+              iterator+=maxRecordCount!
+            }
           }
         }
         setLoading(false)
-        const file = JSON.stringify(featureCollection)
-        const blob = new Blob([file]);                   // Step 3
-        const fileDownloadUrl = URL.createObjectURL(blob);
-        download(fileDownloadUrl, props.element.name!+'.geojson')
+        if(errorFlag){
+          return
+        } else{
+          const file = JSON.stringify(featureCollection)
+          const blob = new Blob([file]);                   // Step 3
+          const fileDownloadUrl = URL.createObjectURL(blob);
+          download(fileDownloadUrl, props.element.name!+'.geojson')
+        }
+        
       })
       .catch(e=>{
         setListIcon('x')
         setLoading(false)
         setAlert({
           open:true,
-          message:e.message
+          message:`error with request ${JSON.stringify(e.message)}`
         })
-        console.log(e)
+        console.log(e.message)
       })
   }
   
@@ -111,10 +142,13 @@ export default function ServiceItemDetailsElement(props:ServiceItemDetailsElemen
           ></CalciteAction>
         </CalciteListItem>}
         <CalciteAlert
-          label="Something went wrong"
+          color='red'
+          label="calcite-alert"
           open={alert?.open}
         >
-          {alert?.message !== undefined ? alert?.message : ''}
+          <div slot="title">Error</div>
+          <div slot="message">{alert?.message !== undefined ? alert?.message : ''}</div>
+          
         </CalciteAlert>
       </div>
   )
