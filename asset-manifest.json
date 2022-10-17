@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/fetch-map-service/static/css/main.da19431e.css",
-    "main.js": "/fetch-map-service/static/js/main.921ab263.js",
+    "main.js": "/fetch-map-service/static/js/main.64d64cbd.js",
     "polyfills-dom.js": "/fetch-map-service/static/js/polyfills-dom.26c202f1.chunk.js",
     "polyfills-core-js.js": "/fetch-map-service/static/js/polyfills-core-js.4ee51c24.chunk.js",
     "static/js/7716.f2011a27.chunk.js": "/fetch-map-service/static/js/7716.f2011a27.chunk.js",
@@ -67,7 +67,7 @@
     "static/js/8893.c5e878c3.chunk.js": "/fetch-map-service/static/js/8893.c5e878c3.chunk.js",
     "static/js/5797.46ef12ea.chunk.js": "/fetch-map-service/static/js/5797.46ef12ea.chunk.js",
     "static/js/9910.433e2b47.chunk.js": "/fetch-map-service/static/js/9910.433e2b47.chunk.js",
-    "static/js/6715.6c33d570.chunk.js": "/fetch-map-service/static/js/6715.6c33d570.chunk.js",
+    "static/js/6715.a3559d82.chunk.js": "/fetch-map-service/static/js/6715.a3559d82.chunk.js",
     "static/js/7266.825ec946.chunk.js": "/fetch-map-service/static/js/7266.825ec946.chunk.js",
     "static/js/3302.923cfd2b.chunk.js": "/fetch-map-service/static/js/3302.923cfd2b.chunk.js",
     "static/js/2544.d66196be.chunk.js": "/fetch-map-service/static/js/2544.d66196be.chunk.js",
@@ -93,7 +93,7 @@
     "static/js/7375.0b1e1c71.chunk.js": "/fetch-map-service/static/js/7375.0b1e1c71.chunk.js",
     "index.html": "/fetch-map-service/index.html",
     "main.da19431e.css.map": "/fetch-map-service/static/css/main.da19431e.css.map",
-    "main.921ab263.js.map": "/fetch-map-service/static/js/main.921ab263.js.map",
+    "main.64d64cbd.js.map": "/fetch-map-service/static/js/main.64d64cbd.js.map",
     "polyfills-dom.26c202f1.chunk.js.map": "/fetch-map-service/static/js/polyfills-dom.26c202f1.chunk.js.map",
     "polyfills-core-js.4ee51c24.chunk.js.map": "/fetch-map-service/static/js/polyfills-core-js.4ee51c24.chunk.js.map",
     "7716.f2011a27.chunk.js.map": "/fetch-map-service/static/js/7716.f2011a27.chunk.js.map",
@@ -159,7 +159,7 @@
     "8893.c5e878c3.chunk.js.map": "/fetch-map-service/static/js/8893.c5e878c3.chunk.js.map",
     "5797.46ef12ea.chunk.js.map": "/fetch-map-service/static/js/5797.46ef12ea.chunk.js.map",
     "9910.433e2b47.chunk.js.map": "/fetch-map-service/static/js/9910.433e2b47.chunk.js.map",
-    "6715.6c33d570.chunk.js.map": "/fetch-map-service/static/js/6715.6c33d570.chunk.js.map",
+    "6715.a3559d82.chunk.js.map": "/fetch-map-service/static/js/6715.a3559d82.chunk.js.map",
     "7266.825ec946.chunk.js.map": "/fetch-map-service/static/js/7266.825ec946.chunk.js.map",
     "3302.923cfd2b.chunk.js.map": "/fetch-map-service/static/js/3302.923cfd2b.chunk.js.map",
     "2544.d66196be.chunk.js.map": "/fetch-map-service/static/js/2544.d66196be.chunk.js.map",
@@ -185,6 +185,6 @@
   },
   "entrypoints": [
     "static/css/main.da19431e.css",
-    "static/js/main.921ab263.js"
+    "static/js/main.64d64cbd.js"
   ]
 }
