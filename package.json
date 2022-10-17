@@ -1,7 +1,7 @@
 {
   "name": "fetch-map-service",
   "version": "0.1.0",
-  "homepage": "/fetch-map-service",
+  "homepage": "https://fms.zpdev.app",
   "private": true,
   "dependencies": {
     "@esri/calcite-components": "^1.0.0-beta.95",
