@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "homepage": "/fetch-map-service",
   "private": true,
-  "homepage": "https://zporteous.github.io/fetch-map-service/",
   "dependencies": {
     "@esri/calcite-components": "^1.0.0-beta.95",
     "@esri/calcite-components-react": "^0.32.0",
