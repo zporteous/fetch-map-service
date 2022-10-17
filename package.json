@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "/fetch-map-service",
   "private": true,
+  "homepage": "https://zporteous.github.io/fetch-map-service/",
   "dependencies": {
     "@esri/calcite-components": "^1.0.0-beta.95",
     "@esri/calcite-components-react": "^0.32.0",
@@ -22,6 +23,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "ncp": "^2.0.0"
   }
 }

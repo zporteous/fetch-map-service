@@ -104,6 +104,9 @@ function ServiceItem({ seedUrl }: { seedUrl: string | undefined }) {
         id='modal'
         ref={modalRef as any}
         width='l'
+        scale='l'
+        color='blue'
+        backgroundColor='grey'
         fullscreen
       > 
         <div slot='header'>{mapServiceProperties.path}</div>
