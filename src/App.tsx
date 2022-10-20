@@ -12,9 +12,9 @@ const sampleServices = [
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer',
   'https://sampleserver6.arcgisonline.com/arcgis/rest/services/Military/MapServer',
   'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Region_Division/MapServer',
-  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_TAB2020/State_County/MapServer',
-  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2018/State_County/MapServer',
-  'https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2017/Places_CouSub_ConCity_SubMCD/MapServer'
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/CommercialDamageAssessment/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/OilSandsProjectBoundaries/MapServer',
+  'https://sampleserver6.arcgisonline.com/arcgis/rest/services/WindTurbines/MapServer'
  ]
 
  function getRandomInt(min:number, max:number) {
